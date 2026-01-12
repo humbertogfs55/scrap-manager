@@ -1,15 +1,22 @@
-use gtk4::prelude::*;
-use gtk4::{Application, ApplicationWindow};
+mod app;
+mod util;
+
+use anyhow::Result;
+use util::{logging, paths::AppPaths};
 
 fn main() {
-    let app = Application::new(Some("local.scrap.manager"), Default::default());
+    if let Err(err) = run() {
+        eprintln!("fatal error: {err:#}");
+        std::process::exit(1);
+    }
+}
 
-    app.connect_activate(|app| {
-        let window = ApplicationWindow::new(app);
-        window.set_title(Some("Scrap Manager"));
-        window.set_default_size(800, 600);
-        window.show();
-    });
+fn run() -> Result<()> {
+    let paths = AppPaths::init()?;
 
-    app.run();
+    logging::init(&paths.log_dir)?;
+
+    log::info!("application starting");
+
+    app::run(paths)
 }
