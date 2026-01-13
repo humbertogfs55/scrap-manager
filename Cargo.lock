@@ -772,8 +772,10 @@ dependencies = [
  "directories-next",
  "gtk4",
  "log",
+ "once_cell",
  "rusqlite",
  "simplelog",
+ "thiserror 2.0.17",
 ]
 
 [[package]]

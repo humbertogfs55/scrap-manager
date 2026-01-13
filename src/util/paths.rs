@@ -1,11 +1,12 @@
 use anyhow::{Context, Result};
 use directories_next::ProjectDirs;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
+#[derive(Debug, Clone)]
 pub struct AppPaths {
     pub data_dir: PathBuf,
-    pub db_file: PathBuf,
+    pub db_dir: PathBuf,
     pub log_dir: PathBuf,
 }
 
@@ -15,8 +16,8 @@ impl AppPaths {
             .context("failed to resolve project directories")?;
 
         let data_dir = proj_dirs.data_dir().to_path_buf();
-        let log_dir = proj_dirs.data_dir().join("logs");
-        let db_file = data_dir.join("scrap_manager.db");
+        let log_dir = data_dir.join("logs");
+        let db_dir = data_dir.join("scrap_manager.db");
 
         fs::create_dir_all(&data_dir).context("failed to create data directory")?;
 
@@ -24,7 +25,7 @@ impl AppPaths {
 
         Ok(Self {
             data_dir,
-            db_file,
+            db_dir,
             log_dir,
         })
     }

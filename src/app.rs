@@ -4,7 +4,7 @@ use gtk4::{Application, ApplicationWindow, Box as GtkBox, Orientation};
 
 use crate::util::paths::AppPaths;
 
-pub fn run(paths: AppPaths) -> Result<()> {
+pub fn run(_paths: AppPaths) -> Result<()> {
     let app = Application::new(Some("local.scrap.manager"), Default::default());
 
     app.connect_activate(build_ui);
